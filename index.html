@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Web组件 : Web Components" />
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Web组件 by suetming</title>
+    <title>Web组件</title>
   </head>
 
   <body>
 
-    <header>
-      <div class="container">
-        <h1>Web组件</h1>
-        <h2>Web Components</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/suetming/webcomponents">View on GitHub</a>
 
-        <section id="downloads">
-          <a href="https://github.com/suetming/webcomponents/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/suetming/webcomponents/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/suetming/webcomponents" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+          <h1 id="project_title">Web组件</h1>
+          <h2 id="project_tagline">Web Components</h2>
 
-    <div class="container">
-      <section id="main_content">
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/suetming/webcomponents/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/suetming/webcomponents/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a name="web" class="anchor" href="#web"><span class="octicon octicon-link"></span></a>Web组件</h1>
 
@@ -51,7 +54,7 @@
 <ul>
 <li>1. Templates：由一系列复用时能被激活的标记组成</li>
 <li>2. Decorators：用于Templates中，通过CSS丰富和控制交互改变文本</li>
-<li>3. Custom Elements：让用户可以自定义元素[自定义元素名、自定义API接口]</li>
+<li>3. Custom Elements：让用户可以自定义元素[自定义元素名、自定义API接口</li>
 <li>4. Shadow DOM：将一组DOM树封装成一个用户接口元素</li>
 <li>5. Imports：定义如何将Templates、Decorators和Custom Elements打包，并且能够以资源的形式从外部引用</li>
 </ul><p>每一部分都有各自的用途. 如果将这5种技术引入，开发人员可以轻松的编写拥有复杂交互体验的组件，并且可以轻松引用和组装，这是今天的CSS和脚本语言所无法达到的</p>
@@ -60,6 +63,15 @@
       </section>
     </div>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Web组件 maintained by <a href="https://github.com/suetming">suetming</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
