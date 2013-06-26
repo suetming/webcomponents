@@ -138,6 +138,60 @@
 <li>Wristwatch
 </li>
 </ul><p><strong>decorator</strong> CSS属性可以指向任何网络资源，不过只有其“定义”被调用才能申请，生成的标记仅限于展示，永远不会运行脚本包括内联事件，而且也是不可编辑的</p>
+
+<p>4.1 Decorators的事件
+Decorators可以关联事件增强交互，decorator采用事件控制器当做媒介，因为decorator可能在任何时间生效或者失效，所以关联template中监听节点事件或者获取其状态都是无效的</p>
+
+<p><img src="http://www.w3.org/TR/2013/WD-components-intro-20130606/event-handler-registration.png" alt="事件注册"></p>
+
+<p>通过事件控制器注册事件监听器，template中插入&lt;script&gt;，decorator元素插入到文档中时脚本会执行，脚本会被插入到注册队列中:</p>
+
+<div class="highlight"><pre><span class="nt">&lt;decorator</span> <span class="na">id=</span><span class="s">"details-open"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">function</span> <span class="nx">clicked</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="s1">'open'</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="p">[{</span><span class="nx">selector</span><span class="o">:</span> <span class="s1">'#summary'</span><span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">'click'</span><span class="p">,</span> <span class="nx">handler</span><span class="o">:</span> <span class="nx">clicked</span><span class="p">}];</span>
+    <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">"summary"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- as illustrated above --&gt;</span>
+</pre></div>
+
+<p>事件控制器解析注册事件如图所示</p>
+
+<p><img src="http://www.w3.org/TR/2013/WD-components-intro-20130606/event-routing-retargeting.png" alt="事件的路由和重定向"></p>
+
+<p>事件监听器被调用时，事件的目标是最终生成的内容而不是template中的内容. 点击template中定义的▾，将会调用单击事件（在template中定义的__#summary__元素）, event.target指向&lt;details&gt;，事件的重定向不会影响文档DOM结构</p>
+
+<p>移除属性__open__，由于selector与decorator的属性不匹配，这个decorator不再有效. 未应用的decorator会回到最初的状态. 不过可以再构造一个decorator来渲染__closed__，通过激活不同的decorator可以达到无状态交互，代码如下</p>
+
+<div class="highlight"><pre><span class="nt">&lt;style&gt;</span>
+<span class="nt">details</span> <span class="p">{</span>
+    <span class="n">decorator</span><span class="o">:</span> <span class="sx">url(#details-closed)</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">details</span><span class="o">[</span><span class="nt">open</span><span class="o">]</span> <span class="p">{</span>
+    <span class="n">decorator</span><span class="o">:</span> <span class="sx">url(#details-open)</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+
+<span class="nt">&lt;decorator</span> <span class="na">id=</span><span class="s">"details-closed"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script&gt;</span>
+        <span class="kd">function</span> <span class="nx">clicked</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">'open'</span><span class="p">,</span> <span class="s1">'open'</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="p">[{</span><span class="nx">selector</span><span class="o">:</span> <span class="s1">'#summary'</span><span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">'click'</span><span class="p">,</span> <span class="nx">handler</span><span class="o">:</span> <span class="nx">clicked</span><span class="p">}];</span>
+    <span class="nt">&lt;/script&gt;</span>
+    <span class="nt">&lt;template&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">id=</span><span class="s">"summary"</span><span class="nt">&gt;</span>
+            <span class="ni">&amp;blacktriangleright;</span> <span class="nt">&lt;content</span> <span class="na">select=</span><span class="s">"summary"</span><span class="nt">&gt;&lt;/content&gt;</span>
+        <span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;/template&gt;</span>
+<span class="nt">&lt;/decorator&gt;</span>
+
+<span class="nt">&lt;decorator</span> <span class="na">id=</span><span class="s">"details-open"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- as illustrated above --&gt;</span>
+</pre></div>
       </section>
     </div>
 
