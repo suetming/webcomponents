@@ -61,7 +61,29 @@
 <h2>
 <a name="3-templates" class="anchor" href="#3-templates"><span class="octicon octicon-link"></span></a>3 Templates</h2>
 
-<p>具体规范参加这篇<a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/templates/index.html">HTML Templates</a></p>
+<p>具体规范参加这篇<a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/templates/index.html">HTML Templates</a>
+&lt;template&gt;元素及其所包含元素会由解析器进行解析并标记，不过不会立即渲染出来，脚本不会立即执行，包含的图片也不会立即下载
+&lt;template&gt;元素有一个属性 <strong>content</strong> 存储元素的实际内容，属性 <strong>content</strong> 的内容可以拷贝移动到HTML节点中</p>
+
+<div class="highlight"><pre><span class="nt">&lt;template</span> <span class="na">id=</span><span class="s">"commentTemplate"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">""</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"comment-text"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">function</span> <span class="nx">addComment</span><span class="p">(</span><span class="nx">imageUrl</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#commentTemplate"</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">comment</span> <span class="o">=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+  <span class="c1">// Populate content.</span>
+  <span class="nx">comment</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'img'</span><span class="p">).</span><span class="nx">src</span> <span class="o">=</span> <span class="nx">imageUrl</span><span class="p">;</span>
+  <span class="nx">comment</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'.comment-text'</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">text</span><span class="p">;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">comment</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<p><strong>template</strong> 所包含的的元素包含在属性 <strong>content</strong> 中，通过script拷贝里面的元素并插入到HTML中使图片加载进来，脚本开始运行. 例如，在templates引入大型脚本，需要时调用</p>
       </section>
     </div>
 
