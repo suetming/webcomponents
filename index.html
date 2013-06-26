@@ -1,42 +1,44 @@
 <!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Web组件 by suetming</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/suetming/webcomponents">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/suetming/webcomponents/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/suetming/webcomponents/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-  <title>Web组件</title>
-  <meta name="description" content="Web Components">
+    <div class="wrapper">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-</head>
-
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Web组件</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">Web Components</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/suetming/webcomponents/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/suetming/webcomponents/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/suetming/webcomponents" class="code">View Web组件 on GitHub</a>
+      <section>
+        <div id="title">
+          <h1>Web组件</h1>
+          <p>Web Components</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/suetming">suetming</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h1>
+
+        <h1>
 <a name="web" class="anchor" href="#web"><span class="octicon octicon-link"></span></a>Web组件</h1>
 
 <p>译者：suetming</p>
@@ -200,27 +202,81 @@ Decorators可以关联事件增强交互，decorator采用事件控制器当做�
 <span class="nt">&lt;decorator</span> <span class="na">id=</span><span class="s">"details-open"</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- as illustrated above --&gt;</span>
 </pre></div>
-        </article>
-      </div>
+
+<h2>
+<a name="5-custom-elements" class="anchor" href="#5-custom-elements"><span class="octicon octicon-link"></span></a>5 Custom Elements</h2>
+
+<p>技术规范见此<a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/custom/index.html">The Custom Elements specification</a></p>
+
+<p>用户可以构造新的DOM元素，这种技术称之为Custom Elements. 不像decorators，自定义元素可以封装状态并提供脚本接口. 下面的数据表表明两者区别</p>
+
+<table>
+<tr>
+<td></td>
+      <td>Decorators</td>
+      <td>Custom Elements</td>
+   </tr>
+<tr>
+<td>Lifetime</td>
+      <td>Ephemeral, while a CSS selector matches</td>
+      <td>Stable, matches entire element lifetime</td>
+   </tr>
+<tr>
+<td>Applied, unapplied dynamically</td>
+      <td>Yes, based on CSS selectors</td>
+      <td>No, fixed at element creation time</td>
+   </tr>
+<tr>
+<td>Accessible through script</td>
+      <td>No, transparent to DOM; cannot add interfaces</td>
+      <td>Yes, accessible through DOM; can provide interfaces</td>
+   </tr>
+<tr>
+<td>State</td>
+      <td>Stateless projection</td>
+      <td>Stateful DOM object</td>
+   </tr>
+<tr>
+<td>Behavior</td>
+      <td>Simulated by changing decorators</td>
+      <td>First-class using script and events</td>
+   </tr>
+</table><h2>
+<a name="51-" class="anchor" href="#51-"><span class="octicon octicon-link"></span></a>5.1 构造一个自定义元素</h2>
+
+<p>用&lt;element&gt;构造一个元素，并指明继承哪一个属性如下：</p>
+
+<div class="highlight"><pre><span class="nt">&lt;element</span> <span class="na">extends=</span><span class="s">"button"</span> <span class="na">name=</span><span class="s">"fancy-button"</span><span class="nt">&gt;</span>
+    …
+<span class="nt">&lt;/element&gt;</span>
+</pre></div>
+
+<p><strong>extends</strong>属性标记继承于哪一个元素，自定义元素实例会有此标记名</p>
+
+<p><strong>name</strong>属性指明元素名称，命名必须包含“-”</p>
+
+<p>用户的自定义元素应该继承最接近自己想法的实际存在的元素. 如果用户构造不继承任何元素的自定义元素，user agent会抛出异常<a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/elements.html#htmlunknownelement">HTMLUnknownElement</a></p>
+
+<h2>
+<a name="52-" class="anchor" href="#52-"><span class="octicon octicon-link"></span></a>5.2 方法和属性</h2>
+
+<p>将&lt;script&gt;插入到自定义元素中可以对自定义元素增加方法和属性，下面的例子中元素&lt;tick-tock-clock&gt;增加了tick方法</p>
+
+<div class="highlight"><pre><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">"tick-tock-clock"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="p">({</span>
+      <span class="nx">tick</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="err">…</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</pre></div>
+      </section>
+
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/suetming" class="avatar"><img src="https://secure.gravatar.com/avatar/148afaf16136735665c62e1bdc10784e?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/suetming">suetming</a> maintains <a href="https://github.com/suetming/webcomponents">Web组件</a></p>
-
-
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/suetming/webcomponents/tarball/master" class="tar">tar</a><a href="https://github.com/suetming/webcomponents/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-            <script type="text/javascript">
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -231,5 +287,5 @@ Decorators可以关联事件增强交互，decorator采用事件控制器当做�
             } catch(err) {}
           </script>
 
-</body>
+  </body>
 </html>
