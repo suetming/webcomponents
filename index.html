@@ -1,43 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
     <title>Web组件 by suetming</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/suetming/webcomponents">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/suetming/webcomponents/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/suetming/webcomponents/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <header>
+      <div class="container">
+        <h1>Web组件</h1>
+        <h2>Web Components</h2>
 
-      <section>
-        <div id="title">
-          <h1>Web组件</h1>
-          <p>Web Components</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/suetming">suetming</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
+        <section id="downloads">
+          <a href="https://github.com/suetming/webcomponents/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/suetming/webcomponents/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/suetming/webcomponents" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
 
+    <div class="container">
+      <section id="main_content">
         <h1>
 <a name="web" class="anchor" href="#web"><span class="octicon octicon-link"></span></a>Web组件</h1>
 
@@ -272,10 +262,151 @@ Decorators可以关联事件增强交互，decorator采用事件控制器当做�
   <span class="nt">&lt;/script&gt;</span>
 <span class="nt">&lt;/element&gt;</span>
 </pre></div>
-      </section>
 
+<p>5.3 生命周期回调函数
+自定义元素有很多回调函数如下：</p>
+
+<ul>
+<li>readyCallback：创建时调用</li>
+<li>insertedCallback：插入文档时调用</li>
+<li>removedCallbakc：删除元素时调用</li>
+</ul><p>下面的例子演示如何用template，Shadow DOM (见下一章节)，以及Custom Elements回调函数创建元素：</p>
+
+<div class="highlight"><pre><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">"tick-tock-clock"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;template&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"hh"</span><span class="nt">&gt;&lt;/span&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"sep"</span><span class="nt">&gt;</span>:<span class="nt">&lt;/span&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"mm"</span><span class="nt">&gt;&lt;/span&gt;</span>
+  <span class="nt">&lt;/template&gt;</span>
+  <span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">currentScript</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'template'</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">start</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">tick</span><span class="p">();</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">_interval</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tick</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">),</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">stop</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">clearInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_interval</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">fmt</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">?</span> <span class="s1">'0'</span> <span class="o">:</span> <span class="s1">''</span><span class="p">)</span> <span class="o">+</span> <span class="nx">n</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="p">({</span>
+      <span class="nx">readyCallback</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_root</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">createShadowRoot</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">cloneNode</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">parentElement</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">start</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="nx">insertedCallback</span><span class="o">:</span> <span class="nx">start</span><span class="p">,</span>
+      <span class="nx">removedCallback</span><span class="o">:</span> <span class="nx">stop</span><span class="p">,</span>
+      <span class="nx">tick</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'hh'</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">fmt</span><span class="p">(</span><span class="nx">now</span><span class="p">.</span><span class="nx">getHours</span><span class="p">());</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'sep'</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">=</span>
+            <span class="nx">now</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">()</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">?</span> <span class="s1">'visible'</span> <span class="o">:</span> <span class="s1">'hidden'</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_root</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">'mm'</span><span class="p">).</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">fmt</span><span class="p">(</span><span class="nx">now</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">());</span>
+      <span class="p">},</span>
+      <span class="nx">chime</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="err">…</span> <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/element&gt;</span>
+</pre></div>
+
+<p>5.4 Custom Elements实例化
+自定义元素均继承HTML的标准元素(div/button/option/...)， 当用户想用这些元素的时候需要用到属性__is__，如下：</p>
+
+<div class="highlight"><pre><span class="nt">&lt;element</span> <span class="na">extends=</span><span class="s">"button"</span> <span class="na">name=</span><span class="s">"fancy-button"</span><span class="nt">&gt;</span>  <span class="c">&lt;!-- definition --&gt;</span>
+    …
+<span class="nt">&lt;/element&gt;</span>
+
+<span class="nt">&lt;button</span> <span class="na">is=</span><span class="s">"fancy-button"</span><span class="nt">&gt;</span>  <span class="c">&lt;!-- use --&gt;</span>
+    Do something fancy
+<span class="nt">&lt;/button&gt;</span>
+</pre></div>
+
+<p>5.5 Script实例化Custom Elements
+通过脚本语言也可以实例化自定义元素，方法为__register__，具体见下述代码：</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">HTMLButtonElement</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="p">{});</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">dazzle</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="err">…</span> <span class="p">};</span>
+
+<span class="c1">// 返回实例化对象</span>
+<span class="kd">var</span> <span class="nx">FancyButton</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">'button'</span><span class="p">,</span> <span class="s1">'fancy-button'</span><span class="p">,</span> <span class="p">{</span><span class="nx">prototype</span><span class="o">:</span> <span class="nx">p</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FancyButton</span><span class="p">();</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">dazzle</span><span class="p">();</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>也可以直接通过createElement生成：</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'button'</span><span class="p">,</span> <span class="s1">'fancy-button'</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">outerHTML</span><span class="p">);</span> <span class="c1">// will display '&lt;button is="fancy-button"&gt;&lt;/button&gt;'</span>
+<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'tick-tock-clock'</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">outerHTML</span><span class="p">);</span> <span class="c1">// will display '&lt;tick-tock-clock&gt;&lt;/tick-tock-clock&gt;'</span>
+</pre></div>
+
+<h2>
+<a name="56-" class="anchor" href="#56-"><span class="octicon octicon-link"></span></a>5.6 元素更新</h2>
+
+<p>当元素定义调用的时候，每一个匹配的元素都会进行更新. 更新元素后，元素相应API会生效，生命周期相关函数会被调用.
+通过CSS__:unresolved__可以匹配所有为构造的自定义元素，通过这种方式避免更新元素所造成的闪烁</p>
+
+<div class="highlight"><pre><span class="nt">&lt;style&gt;</span>
+<span class="nt">tick-tock-clock</span><span class="nd">:unresolved</span> <span class="p">{</span>
+  <span class="k">content</span><span class="o">:</span> <span class="s1">'??:??'</span><span class="p">;</span>  
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;tick</span><span class="na">-tock-clock</span><span class="nt">&gt;</span><span class="err">&lt;</span>/tick-tock-clock&gt; <span class="c">&lt;!-- will show ??:?? --&gt;</span>
+</pre></div>
+
+<p>也可以通过脚本进行控制</p>
+
+<div class="highlight"><pre><span class="c1">// Chime ALL the clocks!</span>
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">forEach</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">'tick-tock-clock:not(:unresolved)'</span><span class="p">),</span>
+  <span class="kd">function</span> <span class="p">(</span><span class="nx">clock</span><span class="p">)</span> <span class="p">{</span> <span class="nx">clock</span><span class="p">.</span><span class="nx">chime</span><span class="p">();</span> <span class="p">});</span>
+</pre></div>
+
+<p>通过自定义事件元素可以通知页面其他部分元素已经更新，可以等到元素更新完成，脚本在对其进行操作</p>
+
+<p>5.7 扩展Custom Elements
+元素也可以继承自定义元素，代码如下：</p>
+
+<div class="highlight"><pre><span class="nt">&lt;element</span> <span class="na">extends=</span><span class="s">"tick-tock-clock"</span> <span class="na">name=</span><span class="s">"grand-father-clock"</span><span class="nt">&gt;</span>
+    …
+<span class="nt">&lt;/element&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">'tick-tock-clock'</span><span class="p">)));</span>
+<span class="nx">p</span><span class="p">.</span><span class="nx">popOutBirdie</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span> <span class="err">…</span> <span class="p">}</span>
+<span class="kd">var</span> <span class="nx">CuckooClock</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">'cuckoo-clock'</span><span class="p">,</span> <span class="p">{</span><span class="nx">prototype</span><span class="o">:</span> <span class="nx">p</span><span class="p">});</span>
+<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">CuckooClock</span><span class="p">();</span>
+<span class="nx">c</span><span class="p">.</span><span class="nx">tick</span><span class="p">();</span>         <span class="c1">// inherited from tick-tock-clock</span>
+<span class="nx">c</span><span class="p">.</span><span class="nx">popOutBirdie</span><span class="p">();</span> <span class="c1">// specific to cuckoo-clock</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+<h2>
+<a name="6-shadow-dom" class="anchor" href="#6-shadow-dom"><span class="octicon octicon-link"></span></a>6 Shadow DOM</h2>
+
+<p>相应规范见这里<a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html">The Shadow DOM specification</a></p>
+
+<p>Shadow DOM 是一种DOM节点的辅助树. Shadow DOM 子树能够关联某个元素，但不会显示在元素子节点中，子树有自己的作用域. 例如，一个shadow DOM 子树可以和文档中相同ID和风格的元素而不冲突，因为shadow DOM 子树与文档是完全分离的</p>
+
+<p>Shadow DOM 通过<a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html#api-partial-element-create-shadow-root"><strong>createShadowRoot</strong></a>方法生效，返回shadow DOM的根节点并填充到DOM节点中</p>
+
+<p></p>
+
+<p>关联shadow DOM的元素称为<a href="https://dvcs.w3.org/hg/webcomponents/raw-file/tip/spec/shadow/index.html#dfn-shadow-host">shadow host</a>. 当元素存在shadow DOM，元素的子节点不会渲染；渲染的是shadow DOM的内容</p>
+
+<p></p>
+      </section>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
